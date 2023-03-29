@@ -47,7 +47,27 @@ module.exports = {
         })
     },
     created:async(req,res)=> {
-        equipo.create(req.body)
+        await equipo.create(req.body)
+        let equipoCreado = await equipo.findOne({
+            include:[
+                {
+                    model:categoria,
+                    as:"categoria",
+                    atributes:["name"]
+                }
+            ],
+            order:[
+                ["id", "DESC"]
+            ],
+            limit:1
+        })
+        console.log(equipoCreado);
+
+        let equipoName_url =`${equipoCreado.name.toLowerCase().replace(/\s+/g, '_')}_${equipoCreado.categoria.name.toLowerCase().charAt(0)}`
+
+        await equipoCreado.update({
+            name_url:equipoName_url
+        })
 
         return res.redirect("/equipos/")
 
@@ -81,6 +101,9 @@ module.exports = {
             color_1: req.body.color_1 != ""? req.body.color_1:null,
             color_2: req.body.color_2 != ""? req.body.color_2:null,
             color_3: req.body.color_3 != ""? req.body.color_3:null,
+        })
+        await equipos.update({
+            name_url:`${equipos.name.toLowerCase().replace(/\s+/g, '_')}_${equipos.categoria.name.toLowerCase().charAt(0)}`
         })
 
         let equiposTorneos= await equipo_torneo.findAll({

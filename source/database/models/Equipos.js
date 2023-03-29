@@ -31,6 +31,10 @@ module.exports=(sequelize,DataTypes)=>{
         color_3:{
             allowNull: true,
             type: DataTypes.STRING
+        },
+        name_url:{
+            allowNull: true,
+            type: DataTypes.STRING
         }
     }
     const Equipo = sequelize.define(alias, cols, config)
