@@ -26,7 +26,7 @@ export default function Header({ allTorneos }) {
         <div className='flex w-full justify-around h-[75px] items-center bg-black text-white fixed'>
             <div className='md:flex hidden justify-around flex-grow'>
                 <LinkHeader texto='Torneos' lista={torn} pagina='torneo' />
-                <LinkHeader texto='Copas' lista={copas} pagina='copa' />
+                {/* <LinkHeader texto='Copas' lista={copas} pagina='copa' /> */}
             </div>
             <Link href='/'>
                 <h1 className='flex-grow flex justify-center mx-[5em]'><Image rel="preload" priority={true} alt='logo' className='w-[40px]' src={ABADlogo}></Image></h1>
@@ -43,7 +43,7 @@ export default function Header({ allTorneos }) {
                             <AiOutlineClose onClick={() => setToggleMenu(false)} />
                         </li>
                         <LinkHeader texto='Torneos' lista={torn} pagina='torneo' />
-                        <LinkHeader texto='Copas' lista={copas} pagina='copa' />
+                        {/* <LinkHeader texto='Copas' lista={copas} pagina='copa' /> */}
                         <LinkHeader texto='Clubs' lista={[]} pagina='club' />
                         <LinkHeader texto='Nosotros' lista={[]} pagina='nosotros' />
                     </ul>

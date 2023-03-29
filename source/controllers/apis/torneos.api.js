@@ -541,15 +541,24 @@ module.exports = {
                 }
             })
 
+            // console.log('partidos', partidos, elTorneo.id);
+            let acumulador = 0
+
             let partidosDatos = partidos.map(p => {
                 let data = {
-                    id: p.id,
                     dia: p.dia,
-                    fecha: p.fecha.name,
+                    fecha: p.fecha.nro,
                     localVisitante: p.local_id == datosEquipo.id ? "L" : "V",
                     rival: p.local_id == datosEquipo.id ? p.visitante.team_name : p.local.team_name,
-                    resultado: p.local_id == datosEquipo.id ? `${p.g_local} - ${p.g_visitante}` : `${p.g_visitante} - ${p.g_local}`
+                    goles: {
+                        equipo: p.local_id == datosEquipo.id ? p.g_local : p.g_visitante,
+                        rival: p.local_id == datosEquipo.id ? p.g_visitante : p.g_local
+                    }
+                    // resultado: p.local_id == datosEquipo.id ? `${p.g_local} - ${p.g_visitante}` : `${p.g_visitante} - ${p.g_local}`
                 }
+                if (data.goles.equipo > data.goles.rival) acumulador += 3
+                if (data.goles.equipo == data.goles.rival) acumulador += 1
+                data.goles.equipo !== null ? data.puntos = acumulador : null
                 return data
             })
 

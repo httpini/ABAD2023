@@ -11,11 +11,11 @@ import { useRouter } from 'next/router'
 import LinksEquipos from '@/components/LinksEquipos'
 import LinksTorneoEquipo from '@/components/LinksTorneoEquipo'
 
-export default function ClubId({ id, club, equipos, torneos, dataEquipo }) {
+export default function ClubId({ id, club, equipos, torneos, equipoData }) {
   const [query, setQuery] = useState({})
   let router = useRouter();
 
-  // console.log('torneos', equipos);
+  console.log('equipoData', equipoData);
   useEffect(() => {
     setQuery(router.query)
   }, [equipos, torneos])
@@ -41,10 +41,14 @@ export default function ClubId({ id, club, equipos, torneos, dataEquipo }) {
             ))
           }
         </div>
-        <div className='grid md:grid-cols-2 w-full flex-wrap gap-10 justify-around p-10'>
-          <InformacionEquipo />
-          <FechasEquipo />
-        </div>
+        {
+          equipoData && (
+            <div className='grid md:grid-cols-2 w-full flex-wrap gap-10 justify-around p-10'>
+              <InformacionEquipo />
+              <FechasEquipo partidos={equipoData.equipos.partidos} />
+            </div>
+          )
+        }
       </section>
       <Footer />
     </div>
@@ -72,6 +76,9 @@ export const getServerSideProps = async ({ params: { id }, query: { torneo, equi
   }
 
   if (torneos) props.torneos = torneos
+  // console.log(equipoData.data);
+  if (equipoData) props.equipoData = equipoData.data
+
 
   return {
     props
