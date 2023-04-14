@@ -36,7 +36,7 @@ export default function TarjetaPartido({ data }) {
         <Link className={`${data.predio_url ? 'hover:text-amarillo hover:font-bold' : ''}`} href={data.predio_url ? data.predio_url : '#'} target={data.predio_url ? "_blank" : ''} style={data.predio_url ? { cursor: 'pointer' } : { cursor: 'default' }} >{data.predio_name ? data.predio_name : 'Predio a confirmar'}</Link>
         {/* <p className='cursor-pointer'>{data.predio_name ? data.predio_name : 'predio a confirmar'}</p> */}
         <p>-</p>
-        <p>{data.torneo_name}</p>
+        <Link className='hover:text-amarillo hover:font-bold' href={`/torneo/${data.torneo_url}`}>{data.torneo_name}</Link>
       </div>
     </div>
   )

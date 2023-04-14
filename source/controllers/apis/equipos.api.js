@@ -7,16 +7,36 @@ module.exports={
             let clubes = await club.findAll({
                 order:[
                     ["name","ASC"]
+                ],
+                include:[
+                    {
+                        model:equipo,
+                        as:"equipos",
+                        atributes:["color_1","color_2","color_3"]
+                    }
                 ]
             })
-            clubes = clubes.map(c=>{
-                let data={
-                    id:c.id,
-                    name: c.name,
-                    name_url:c.name_url
+            clubes = clubes.map(club=>{
+                let equipos = club.equipos.filter(equipo=> equipo.color_1!= null && equipo.color_1 != "")
+                let data = {
+                    id:club.id,
+                    name:club.name,
+                    name_url:club.name_url,
+                    colores:[]
                 }
-                return data
+                if(equipos[0].color_1 != null && equipos[0].color_1 != ""){
+                    data.colores.push(equipos[0].color_1)
+                }
+                if(equipos[0].color_2 != null && equipos[0].color_2 != ""){
+                    data.colores.push(equipos[0].color_2)
+                }
+                if(equipos[0].color_3 != null && equipos[0].color_3 != ""){
+                    data.colores.push(equipos[0].color_3)
+                }
+                return  data
             })
+
+            
             return res.send({clubes}).status(200)
         }catch(error){
             return res.status(505).json(error)

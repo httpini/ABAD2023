@@ -2,6 +2,13 @@ export const torneos = ['amateur', 'pro', 'bancos', 'femenino']
 
 export const copas = ['2020', '2021', '2022', '2023']
 
+// import dotenv from 'dotenv';
+// // import fs from 'fs';
+// let port = dotenv.config({ path: '../.env' });
+// console.log(process.env.PORT);
+
+// export const PORT = port.parsed.PORT
+
 export const equipos = [{
     nombre: 'BCRA',
     puntaje: 12,

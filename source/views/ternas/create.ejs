@@ -5,39 +5,43 @@
 <body>
     <%- include("../includes/header.ejs") %>
     <main>
-        <form method="post" action="/ternas/created">
-            <h3> Nueva Terna <i class="fa-solid fa-plus"></i></h3>
-            <label for="name">Nombre de la terna (Abreviacion)</label>
-            <input type="text" name="name" id="name"
-            value="<%= locals.oldData ? oldData.name: null %>">
-            <% if (locals.errors && errors.name) { %>
-                <p class="msg-error"><%= errors.name.msg %></p>
-            <% } %>  
-
-            <label for="responsable">Nombre y Apellido del responsable</label>
-            <input type="text" name="responsable" id="responsable"
-            value="<%= locals.oldData ? oldData.responsable: null %>">
-            <% if (locals.errors && errors.responsable) { %>
-                <p class="msg-error"><%= errors.responsable.msg %></p>
-            <% } %> 
-
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email"
-            value="<%= locals.oldData ? oldData.email: null %>">
-            <% if (locals.errors && errors.email) { %>
-                <p class="msg-error"><%= errors.email.msg %></p>
-            <% } %> 
-
-            <label for="tel">Telefono</label>
-            <input type="number" name="tel" id="tel"
-            value="<%= locals.oldData ? oldData.tel: null %>">
-            <% if (locals.errors && errors.tel) { %>
-                <p class="msg-error"><%= errors.tel.msg %></p>
-            <% } %> 
-
-            <button type="submit">Crear Terna</button>
-
-        </form>
+        <h2>TERNAS</h2>
+        <% if (user && user.permiso == "sAdmin") { %>
+            <form method="post" action="/ternas/created">
+                <h3> Nueva Terna <i class="fa-solid fa-plus"></i></h3>
+                <label for="name">Nombre de la terna (Abreviacion)</label>
+                <input type="text" name="name" id="name"
+                value="<%= locals.oldData ? oldData.name: null %>">
+                <% if (locals.errors && errors.name) { %>
+                    <p class="msg-error"><%= errors.name.msg %></p>
+                <% } %>  
+    
+                <label for="responsable">Nombre y Apellido del responsable</label>
+                <input type="text" name="responsable" id="responsable"
+                value="<%= locals.oldData ? oldData.responsable: null %>">
+                <% if (locals.errors && errors.responsable) { %>
+                    <p class="msg-error"><%= errors.responsable.msg %></p>
+                <% } %> 
+    
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email"
+                value="<%= locals.oldData ? oldData.email: null %>">
+                <% if (locals.errors && errors.email) { %>
+                    <p class="msg-error"><%= errors.email.msg %></p>
+                <% } %> 
+    
+                <label for="tel">Telefono</label>
+                <input type="number" name="tel" id="tel"
+                value="<%= locals.oldData ? oldData.tel: null %>">
+                <% if (locals.errors && errors.tel) { %>
+                    <p class="msg-error"><%= errors.tel.msg %></p>
+                <% } %> 
+    
+                <button type="submit">Crear Terna</button>
+    
+            </form>
+        <%}%>
+        
         <section>
             <h3>Lista de Ternas</h3>
             <nav>

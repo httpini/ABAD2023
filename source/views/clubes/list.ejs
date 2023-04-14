@@ -7,7 +7,11 @@
     <main>
         <h2>Lista de Clubes</h2>
         <% clubes.forEach(c => { %>
-            <h4><%= c.name %> <a href="/clubes/edit/<%= c.id %>"><i class="fa-solid fa-pen-to-square"></i></a></h4>
+            <h4><%= c.name %> 
+                <% if (user && user.permiso == "sAdmin") { %>
+                    <a href="/clubes/edit/<%= c.id %>"><i class="fa-solid fa-pen-to-square"></i></a>
+		        <%}%>
+            </h4>
             <% c.equipos.forEach(e => { %>
                 <span><%= e.name %> <% categorias.forEach(cat => { %>
                     <%= cat.id == e.categoria_id? cat.name :"" %>

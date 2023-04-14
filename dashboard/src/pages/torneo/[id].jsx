@@ -13,6 +13,7 @@ import LinksTorneos from '@/components/LinksTorneos';
 import {BiFootball} from "react-icons/bi"
  import {AiOutlineCloudDownload} from 'react-icons/ai'
 import {GiInjustice} from 'react-icons/gi'
+import { HiOutlineExternalLink } from "react-icons/hi"
 
 const useMediaQuery = (width) => {
   const [targetReached, setTargetReached] = useState(false);
@@ -63,7 +64,7 @@ export default function Torneo({ allTorneos, id, partidos, tabla, goleadores, fa
       <section className='flex flex-col items-center'>
         <LinksTorneos torneos={allTorneos} id={id} hide={isBreakpoint}/>
         <h1 className='text-center font-bold text-2xl mt-4  text-oscuro0'><div className='flex justify-center items-center'><BiFootball></BiFootball>Torneo {title}<BiFootball></BiFootball></div></h1>
-        <Link href={reglamento} target="_blank"><div className='drop-shadow-[0_2.2px_1.2px_rgba(0,0,0,0.8)] shadow-blue-600/50 hover:text-claro1 ease-in duration-200 flex text-xl justify-center text-amarillo items-center gap-2 bg-oscuro1 w-59 p-2 text-center mt-3 rounded-xl' ><GiInjustice className='text-2xl '></GiInjustice><p>Reglamento</p><AiOutlineCloudDownload className='text-2xl'></AiOutlineCloudDownload></div></Link>
+        <Link href={reglamento} target="_blank"><div className='drop-shadow-[0_2.2px_1.2px_rgba(0,0,0,0.8)] shadow-blue-600/50 hover:text-claro1 ease-in duration-200 flex text-xl justify-center text-amarillo items-center gap-2 bg-oscuro1 w-59 p-2 text-center mt-3 rounded-xl' ><GiInjustice className='text-2xl '></GiInjustice><p>Reglamento</p><HiOutlineExternalLink className='text-2xl'></HiOutlineExternalLink></div></Link>
         <div className='flex flex-col break:grid grid-cols-2 justify w-full gap-7 justify-around py-7 sm:px-10'>
           <TablaPuntajes tabla={tabla} />
           <Fechas partidos={partidos} />
@@ -79,19 +80,19 @@ export default function Torneo({ allTorneos, id, partidos, tabla, goleadores, fa
 
 export const getServerSideProps = async ({ params: { id } }) => {
   try {
-    console.time('apis')
+    console.time('apis torneo id')
 
     let results = await Promise.all([
       axios.post('http://localhost:3500/api/partidos', { torneo: id }),
       axios.get('http://localhost:3500/api/torneos'),
       axios.post('http://localhost:3500/api/torneo-tabla', { torneo: id })
     ])
-    console.timeEnd('apis')
-
+    
     let partidos = results[0]
     let allTorneos = results[1]
     let torneo = results[2]
-
+    
+    console.timeEnd('apis torneo id')
     return {
       props: {
         id,

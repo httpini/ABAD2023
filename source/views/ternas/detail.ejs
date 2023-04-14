@@ -13,21 +13,27 @@
                 <th>Responsable</th>
                 <th>Telefono</th>
                 <th>Email</th>
-                <th>Editar/Eliminar</th>
+                <% if (user && user.permiso == "sAdmin") { %>
+                    <th>Editar/Eliminar</th>
+                <%}%>
+                
             </tr>
             <tr>
                 <td><%= terna.name %></td>
                 <td><%= terna.responsable %></td>
                 <td><%= terna.tel%></td>
                 <td><%= terna.email %></td>
-                <td>
-                    <a href="/ternas/edit/<%=terna.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <form action="/ternas/delete/<%=terna.id%>?m=DELETE" method="post">
-                        <button type="submit">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </form>
-                </td>
+                <% if (user && user.permiso == "sAdmin") { %>
+                    <td>
+                        <a href="/ternas/edit/<%=terna.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <form action="/ternas/delete/<%=terna.id%>?m=DELETE" method="post">
+                            <button type="submit">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </form>
+                    </td>
+                <%}%>
+                
             </tr>
         </table>
        </section>

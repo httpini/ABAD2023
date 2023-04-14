@@ -39,7 +39,7 @@ module.exports = {
                     {
                         model: torneo,
                         as: "torneo",
-                        atributes: ["name", "temporada"]
+                        atributes: ["name", "temporada", "name_url"]
                     }
                 ],
 
@@ -74,7 +74,8 @@ module.exports = {
                     predio_name: p.predio_id == null ? null : p.predio.name,
                     predio_url: p.predio_id == null ? null : p.predio.map,
                     estado: p.estado.name,
-                    torneo_name: `${p.torneo.name} ${p.torneo.temporada}`
+                    torneo_name: `${p.torneo.name} ${p.torneo.temporada}`,
+                    torneo_url:p.torneo.name_url
 
                 }
                 if (p.estado_id == 5 || p.estado_id == 7) {
@@ -145,14 +146,15 @@ module.exports = {
                     {
                         model: torneo,
                         as: "torneo",
-                        atributes: ["name", "temporada"]
+                        atributes: ["name", "temporada", "name_url"]
                     }
                 ],
 
                 where: {
                     [Op.or]: [
                         { estado_id: 4 },
-                        { estado_id: 7 }
+                        { estado_id: 7 },
+                        { estado_id: 5 }
                     ]
                 },
                 order: [
@@ -175,6 +177,8 @@ module.exports = {
                     dia: p.dia == "0000-00-00" || p.dia == null ? "A Confirmar" : dateFormated,
                     fecha: p.fecha.name,
                     torneo_name: `${p.torneo.name} ${p.torneo.temporada}`,
+                    torneo_url: p.torneo.name_url,
+
                     local_name: p.local.team_name,
                     local_colores: [],
                     local_goles: p.g_local,

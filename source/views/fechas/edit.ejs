@@ -5,116 +5,125 @@
 <body>
     <%- include("../includes/header.ejs") %>
     <main>
-        <form method="post" action="/fechas/torneo/<%=fecha.torneo.id%>/edit/<%=fecha.id%>?m=PUT" >
-            <h3>Editar Datos de la fecha "<%= fecha.name %>" del <%= fecha.torneo.name %> <%= fecha.torneo.temporada %></h3>
-                       
-            <label for="nro">Fecha Numero</label>
-            <input type="number" id="nro" name="nro" 
-            value="<%= locals.oldData ? oldData.nro: fecha.nro%>">
-            <% if (locals.errors && errors.nro) { %>
-                <p class="msg-error"><%= errors.nro.msg %></p>
-            <% } %>
-
-            <label for="name">Nombre</label>
-            <input type="text" id="name" name="name" 
-            value="<%= locals.oldData ? oldData.name: fecha.name%>">
-            <% if (locals.errors && errors.name) { %>
-                <p class="msg-error"><%= errors.name.msg %></p>
-            <% } %>
-
-            <label for="dia">Dia de juego</label>
-            <input type="date" name="dia" id="dia" value="<%= fecha.dia%>">
-            
-             <button type="submit">Guardar Cambios</button>
-        </form>
-        <section>
-            <h3>PARTIDOS DE LA FECHA</h3>
-            <table>
-                <tr>
-                    <th>Dia</th>
-                    <th>Terna</th>
-                    <th>Local</th>
-                    <th>GL</th>
-                    <th>GV</th>
-                    <th>Visitante</th>
-                    <th>Hora</th>
-                    <th>Predio</th>
-                    <th>Estado</th>
-                    <th>Motivo</th>
-                    <th>Actualizar/Eliminar</th>
-                </tr>
-                <% partidos.forEach(p => { %>
-                    <form action="/partidos/edit/<%=p.id%>?m=PUT" method="post">
+        <% if (user && user.permiso == "sAdmin") { %>
+            <form method="post" action="/fechas/torneo/<%=fecha.torneo.id%>/edit/<%=fecha.id%>?m=PUT" >
+                <h3>Editar Datos de la fecha "<%= fecha.name %>" del <%= fecha.torneo.name %> <%= fecha.torneo.temporada %></h3>
+                           
+                <label for="nro">Fecha Numero</label>
+                <input type="number" id="nro" name="nro" 
+                value="<%= locals.oldData ? oldData.nro: fecha.nro%>">
+                <% if (locals.errors && errors.nro) { %>
+                    <p class="msg-error"><%= errors.nro.msg %></p>
+                <% } %>
+    
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" 
+                value="<%= locals.oldData ? oldData.name: fecha.name%>">
+                <% if (locals.errors && errors.name) { %>
+                    <p class="msg-error"><%= errors.name.msg %></p>
+                <% } %>
+    
+                <label for="dia">Dia de juego</label>
+                <input type="date" name="dia" id="dia" value="<%= fecha.dia%>">
+                
+                 <button type="submit">Guardar Cambios</button>
+            </form>
+        <%}%>
+        
+        <% if (user) { %>
+            <% if (user.permiso == "sAdmin" || user.permiso == "resultados") { %>
+                <section>
+                    <h3>PARTIDOS DE LA FECHA</h3>
+                    <table>
                         <tr>
-                            <td><input type="date" name="dia" id="dia" value="<%= p.dia %>"></td>
-                            <td>
-                                <select name="terna_id" id="terna_id">
-                                    <option disabled <%= p.terna_id != null?"": "selected"%>>A Confirmar</option>
-                                    <% ternas.forEach(t => { %>
-                                        <option value="<%=t.id%>" <%= p.terna_id == t.id? "selected":"" %>><%= t.name %></option>
-                                     
-                                    <% }) %>
-                                </select>
-                            </td>
-                            <td><%= p.local.team_name %></td>
-
-                            <td>
-                                <select name="g_local" id="g_local">
-                                    <option disabled <%= p.g_local != null?"": "selected"%>>-</option>
-                                    <% for( let index = 0; index < 21; index++ ) { %>
-                                        <option value="<%=index%>"  <%= p.g_local == index? "selected" : "" %>><%= index %></option>
-                                    
-                                    <% } %>
-                                </select>
-                            </td>
-                            <td>
-                                <select name="g_visitante" id="g_visitante">
-                                    <option disabled <%= p.g_visitante != null?"": "selected"%>>-</option>
-                                    <% for( let index = 0; index < 21; index++ ) { %>
-                                        <option value="<%=index%>"  <%= p.g_visitante == index? "selected" : "" %>><%= index %></option>
-                                    
-                                    <% } %>
-                                </select>
-
-                            </td>
-
-                            <td><%= p.visitante.team_name %></td>
-
-                            <td><input type="time" name="hora" id="hora" value="<%=p.hora%>"></td>
-
-                            <td>
-                                <select name="predio_id" id="predio_id">
-                                    <option disabled <%= p.predio_id != null?"": "selected"%>>A Confirmar</option>
-                                    <% predios.forEach(pre => { %>
-                                        <option value="<%=pre.id%>" <%= p.predio_id == pre.id ? "selected":""%>><%= pre.name %></option>
-                                     
-                                    <% }) %>
-                                </select>
-                            </td>
-                            <td>
-                                <select name="estado_id" id="estado_id">
-                                    <% estados.forEach(e => { %>
-                                        <option value="<%=e.id%>" <%= p.estado_id == e.id?"selected": ""%>><%= e.name %></option>
-                                     
-                                    <% }) %>
-                                </select>
-                            </td>
-                            <td>
-                                <textarea name="motivo_postergado" id="motivo_postergado" cols="30" rows="2"><%= p.motivo_postergado %></textarea>
-                            </td>
-                            <td>
-                                <button type="submit">Actualizar</button>
-                            </form>
-                                
-                            </td>
+                            <th>Dia</th>
+                            <th>Terna</th>
+                            <th>Local</th>
+                            <th>GL</th>
+                            <th>GV</th>
+                            <th>Visitante</th>
+                            <th>Hora</th>
+                            <th>Predio</th>
+                            <th>Estado</th>
+                            <th>Motivo</th>
+                            <th>Actualizar/Eliminar</th>
                         </tr>
-                        
-                    
-                    
-                 
-                <% }) %>
-            </table>
-        </section>
+                        <% partidos.forEach(p => { %>
+                            <form action="/partidos/edit/<%=p.id%>?m=PUT" method="post">
+                                <tr>
+                                    <td><input type="date" name="dia" id="dia" value="<%= p.dia %>"></td>
+                                    <td>
+                                        <select name="terna_id" id="terna_id">
+                                            <option disabled <%= p.terna_id != null?"": "selected"%>>A Confirmar</option>
+                                            <% ternas.forEach(t => { %>
+                                                <option value="<%=t.id%>" <%= p.terna_id == t.id? "selected":"" %>><%= t.name %></option>
+                                             
+                                            <% }) %>
+                                        </select>
+                                    </td>
+                                    <td><%= p.local.team_name %></td>
+        
+                                    <td>
+                                        <select name="g_local" id="g_local">
+                                            <option disabled <%= p.g_local != null?"": "selected"%>>-</option>
+                                            <% for( let index = 0; index < 21; index++ ) { %>
+                                                <option value="<%=index%>"  <%= p.g_local == index? "selected" : "" %>><%= index %></option>
+                                            
+                                            <% } %>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="g_visitante" id="g_visitante">
+                                            <option disabled <%= p.g_visitante != null?"": "selected"%>>-</option>
+                                            <% for( let index = 0; index < 21; index++ ) { %>
+                                                <option value="<%=index%>"  <%= p.g_visitante == index? "selected" : "" %>><%= index %></option>
+                                            
+                                            <% } %>
+                                        </select>
+        
+                                    </td>
+        
+                                    <td><%= p.visitante.team_name %></td>
+        
+                                    <td><input type="time" name="hora" id="hora" value="<%=p.hora%>"></td>
+        
+                                    <td>
+                                        <select name="predio_id" id="predio_id">
+                                            <option disabled <%= p.predio_id != null?"": "selected"%>>A Confirmar</option>
+                                            <% predios.forEach(pre => { %>
+                                                <option value="<%=pre.id%>" <%= p.predio_id == pre.id ? "selected":""%>><%= pre.name %></option>
+                                             
+                                            <% }) %>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="estado_id" id="estado_id">
+                                            <% estados.forEach(e => { %>
+                                                <option value="<%=e.id%>" <%= p.estado_id == e.id?"selected": ""%>><%= e.name %></option>
+                                             
+                                            <% }) %>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <textarea name="motivo_postergado" id="motivo_postergado" cols="30" rows="2"><%= p.motivo_postergado %></textarea>
+                                    </td>
+                                    <td>
+                                        <button type="submit">Actualizar</button>
+                                    </form>
+                                        
+                                    </td>
+                                </tr>
+                                
+                            
+                            
+                         
+                        <% }) %>
+                    </table>
+                </section>
+             
+            <% } %>
+        <% } %>
+        
 
     </main>
 </body>

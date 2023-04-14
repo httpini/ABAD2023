@@ -99,6 +99,9 @@ module.exports ={
             where:{
                 fecha_id:fec.id
             },
+            order:[
+                ["dia", "ASC"]
+            ],
             include:{all:true}
         })
         let ternas = await terna.findAll({

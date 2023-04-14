@@ -320,6 +320,7 @@ module.exports={
                 await equipo_torneo.create({
                     torneo_id: req.params.id,
                     equipo_id: e,
+                    club_id:tim.club_id,
                     team_name:tim.name,
                     color_1:tim.color_1,
                     color_2:tim.color_2,

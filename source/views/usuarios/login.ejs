@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../includes/head.ejs")  %> 
+
+<body>
+
+    <main>
+        <form method="post" action="/usuarios/login" >
+            <h3>Iniciar Sesion</h3>
+
+            <label for="nombreUsuario">Nombre de Usuario</label>
+            <input name="nombreUsuario" id="nombreUsuario" type="text"
+            value="<%= locals.oldData ? oldData.user_name: null %>">
+            <% if (locals.errors && errors.nombreUsuario) { %>
+                <p class="msg-error"><%= errors.nombreUsuario.msg %></p>
+            <% } %> 
+
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password">
+            <% if (locals.errors && errors.password) { %>
+                <p class="msg-error"><%= errors.password.msg %></p>
+            <% } %>
+
+            <fieldset>
+                <input class="checkbox" type='checkbox' name='recordame' id="recordame" >
+                <label for="recordame">Mantener sesión iniciada</label>
+            </fieldset>
+
+            <button type="submit">Iniciar Sesion</button>
+
+        </form>
+
+    </main>
+</body>
+</html>

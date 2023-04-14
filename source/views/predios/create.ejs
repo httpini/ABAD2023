@@ -5,45 +5,52 @@
 <body>
     <%- include("../includes/header.ejs") %>
     <main>
-        <form method="post" action="/predios/created" >
-            <h3>Nuevo Predio <i class="fa-solid fa-plus"></i></h3>
-            <label for="name">Nombre del Predio</label>
-            <input type="text" name="name" id="name"
-            value="<%= locals.oldData ? oldData.name : null%>">
-            <% if (locals.errors && errors.name) { %>
-                <p class="msg-error"><%= errors.name.msg %></p>
-            <% } %>  
-
-            <label for="adress">Dirección</label>
-            <input type="text" name="adress" id="adress"
-            value="<%= locals.oldData ? oldData.adress : null%>">
-            <% if (locals.errors && errors.adress) { %>
-                <p class="msg-error"><%= errors.adress.msg %></p>
-            <% } %>  
-
-            <label for="map">URL Google maps</label>
-            <input type="text" name="map" id="map"
-            value="<%= locals.oldData ? oldData.map : null%>">
-            <% if (locals.errors && errors.map) { %>
-                <p class="msg-error"><%= errors.map.msg %></p>
-            <% } %>  
-
-
-            <button type="submit">Crear Predio</button>
-        </form>
+        <h2>PREDIOS</h2>
+        <% if (user && user.permiso == "sAdmin") { %>
+            <form method="post" action="/predios/created" >
+                <h3>Nuevo Predio <i class="fa-solid fa-plus"></i></h3>
+                <label for="name">Nombre del Predio</label>
+                <input type="text" name="name" id="name"
+                value="<%= locals.oldData ? oldData.name : null%>">
+                <% if (locals.errors && errors.name) { %>
+                    <p class="msg-error"><%= errors.name.msg %></p>
+                <% } %>  
+    
+                <label for="adress">Dirección</label>
+                <input type="text" name="adress" id="adress"
+                value="<%= locals.oldData ? oldData.adress : null%>">
+                <% if (locals.errors && errors.adress) { %>
+                    <p class="msg-error"><%= errors.adress.msg %></p>
+                <% } %>  
+    
+                <label for="map">URL Google maps</label>
+                <input type="text" name="map" id="map"
+                value="<%= locals.oldData ? oldData.map : null%>">
+                <% if (locals.errors && errors.map) { %>
+                    <p class="msg-error"><%= errors.map.msg %></p>
+                <% } %>  
+    
+    
+                <button type="submit">Crear Predio</button>
+            </form>
+        <% } %>
+        
         <section>
             <h3>Creados Recientemente</h3>
             <nav>
                 <% recentsPredios.forEach(predio => { %>
                     <div>
                         <p><a href="<%=predio.map%>" target="_blank"><%= predio.name %></a> - <%= predio.adress  %></p>
-                        <a href="/predios/edit/<%=predio.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <form action="/predios/delete/<%=predio.id%>?m=DELETE" method="post">
-                            <button type="submit">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-
-                        </form>
+                        
+                        <% if (user && user.permiso == "sAdmin") { %>
+                            <a href="/predios/edit/<%=predio.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="/predios/delete/<%=predio.id%>?m=DELETE" method="post">
+                                <button type="submit">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+    
+                            </form>
+                        <% } %>
                     </div>
                  
                 <% }) %>
@@ -55,13 +62,15 @@
                 <% listaPredios.forEach(predio => { %>
                     <div>
                         <p><a href="<%=predio.map%>" target="_blank"><%= predio.name %></a> - <%= predio.adress  %></p>
-                        <a href="/predios/edit/<%=predio.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <form action="/predios/delete/<%=predio.id%>?m=DELETE" method="post">
-                            <button type="submit">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-
-                        </form>
+                        <% if (user && user.permiso == "sAdmin") { %>
+                            <a href="/predios/edit/<%=predio.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="/predios/delete/<%=predio.id%>?m=DELETE" method="post">
+                                <button type="submit">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+    
+                            </form>
+                        <% } %>
                     </div>
                  
                 <% }) %>

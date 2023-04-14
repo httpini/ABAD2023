@@ -5,7 +5,9 @@
 <body>
     <%- include("../includes/header.ejs") %>
     <main>
-        <form method="post" action="/categorias/created">
+        <h2>CATEGORIAS</h2>
+        <% if (user && user.permiso == "sAdmin") { %>
+            <form method="post" action="/categorias/created">
             <h3> Nueva Categoria <i class="fa-solid fa-plus"></i></h3>
             <label for="name">Nombre de la categoria</label>
             <input type="text" name="name" id="name"
@@ -20,25 +22,33 @@
             <button type="submit">Crear Categoria</button>
 
         </form>
+        <%}%>
+        
         <section>
             <h3>Lista de Categorias</h3>
             <nav>
                 <% categorias.forEach(categoria => { %>
                     <div>
                         <p><%= categoria.name %> - (<%= categoria.equipos.length %>) Equipos </p>
-                        <a href="/categorias/edit/<%=categoria.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <form action="/categorias/delete/<%=categoria.id%>?m=DELETE" method="post">
-                            <button type="submit">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </form>
+                        
+                        <% if (user && user.permiso == "sAdmin") { %>
+                            <a href="/categorias/edit/<%=categoria.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="/categorias/delete/<%=categoria.id%>?m=DELETE" method="post">
+                                <button type="submit">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </form>
+                        <%}%>
                     </div>
                  
                 <% }) %>
             </nav>
 
         </section>
-        <form action="/subcategorias/created" method="post">
+        <h2>SUBCATEGORIAS</h2>
+        <% if (user && user.permiso == "sAdmin") { %>
+            <form action="/subcategorias/created" method="post">
+
             <h3>Nueva Subcategoria <i class="fa-solid fa-plus"></i></h3>
 
             <label for="name">Nombre de la subcategoria</label>
@@ -58,19 +68,23 @@
             
             <button type="submit">Crear Subcategoria</button>
         </form>
+	    <%}%>
+        
         <section>
             <h3>Lista de Subcategorias</h3>
             <nav>
                 <% subcategorias.forEach(subcategoria => { %>
                     <div>
                         <p><%= subcategoria.name %> - <%= subcategoria.categoria.name %> </p>
-                        <a href="/subcategorias/edit/<%=subcategoria.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <form action="/subcategorias/delete/<%=subcategoria.id%>?m=DELETE" method="post">
-                            <button type="submit">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-
-                        </form>
+                        <% if (user && user.permiso == "sAdmin") { %>
+                            <a href="/subcategorias/edit/<%=subcategoria.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="/subcategorias/delete/<%=subcategoria.id%>?m=DELETE" method="post">
+                                <button type="submit">
+                                   <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </form>
+		                <%}%>
+                        
                     </div>
                  
                 <% }) %>

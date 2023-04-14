@@ -8,7 +8,7 @@ export default function Puntaje({ equipo, goles, colores, local }) {
                 {/* {
                     (!local && colores.length > 0) && <ColoresEquipo colores={colores} />
                 } */}
-                <h4 className='text-center w-full'>{equipo}</h4>
+                <h6 className='text-center text-sm w-full mini:text-base'>{equipo}</h6>
                 {/* {
                     (local && colores.length > 0) && <ColoresEquipo colores={colores} />
                 } */}
@@ -17,7 +17,7 @@ export default function Puntaje({ equipo, goles, colores, local }) {
                 }
             </div>
             {
-                goles != undefined && (<span className='w-[100%] block text-center text-5xl'>{goles}</span>)
+                goles != undefined && (<span className='w-[100%] block text-center text-4xl'>{goles}</span>)
             }
         </div>
     )

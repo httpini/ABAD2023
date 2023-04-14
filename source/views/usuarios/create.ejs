@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../includes/head.ejs")  %> 
+
+<body>
+    <%- include("../includes/header.ejs") %>
+    <main>
+        <form method="post" action="/usuarios/created">
+            <h3> Nuevo Usuario <i class="fa-solid fa-plus"></i></h3>
+            <label for="user_name">Nombre de usuario para iniciar sesion</label>
+            <input type="text" name="user_name" id="user_name"
+            value="<%= locals.oldData ? oldData.user_name: null %>">
+            <% if (locals.errors && errors.user_name) { %>
+                <p class="msg-error"><%= errors.user_name.msg %></p>
+            <% } %> 
+
+            <label for="name">Nombre</label>
+            <input type="text" name="name" id="name"
+            value="<%= locals.oldData ? oldData.name: null %>">
+            <% if (locals.errors && errors.name) { %>
+                <p class="msg-error"><%= errors.name.msg %></p>
+            <% } %>
+
+            <label for="last_name">Apellido</label>
+            <input type="text" name="last_name" id="last_name"
+            value="<%= locals.oldData ? oldData.last_name: null %>">
+            <% if (locals.errors && errors.last_name) { %>
+                <p class="msg-error"><%= errors.last_name.msg %></p>
+            <% } %>
+
+
+            <label for="permiso">Nivel de Jerarquia</label>
+            <select name="permiso" id="permiso">
+                <option selected disabled>Selecciona un nivel para este usuario</option>
+                <option value="sAdmin">Super Admin</option>
+                <option value="resultados">Solo Resultados</option>
+                <option value="delegados">Solo Delegados</option>
+                <option value="viewOnly">Solo Vistas</option>
+                <option value="tribunal">Tribunal</option>
+            </select>
+            <% if (locals.errors && errors.permiso) { %>
+                <p class="msg-error"><%= errors.permiso.msg %></p>
+            <% } %> 
+
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password"
+            value="<%= locals.oldData ? oldData.password: null %>">
+            <% if (locals.errors && errors.password) { %>
+                <p class="msg-error"><%= errors.password.msg %></p>
+            <% } %> 
+            
+            <label for="passConfirm">Confirmar Contraseña</label>
+            <input type="password" name="passConfirm" id="passConfirm"
+            value="<%= locals.oldData ? oldData.passConfirm: null %>">
+            <% if (locals.errors && errors.passConfirm) { %>
+                <p class="msg-error"><%= errors.passConfirm.msg %></p>
+            <% } %> 
+
+            <button type="submit">Crear Usuario</button>
+
+        </form>
+        <section>
+            <h3>Lista de Usuarios</h3>
+            <nav>
+                <% usuarios.forEach(u => { %>
+                    <div>
+                        <p><%= u.user_name %> / <%= u.name %> <%= u.last_name %> / <%= u.permiso %></p>
+                        <a href="/usuarios/edit/<%=u.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <form action="/usuarios/delete/<%=u.id%>?m=DELETE" method="post">
+                            <button type="submit">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+
+                        </form>
+                    </div>
+                    
+                       
+                    
+                 
+                <% }) %>
+            </nav>
+
+        </section>
+    </main>
+</body>
+</html>

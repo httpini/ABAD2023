@@ -5,46 +5,49 @@
 <body>
     <%- include("../includes/header.ejs") %>
     <main>
-        <form method="post" action="/delegados/edit/<%= delegado.id %>?m=PUT" >
-            <h3>Editar Delegado <%= delegado.last_name %> <%= delegado.name %> </h3>
-            <label for="name">Nombre</label>
-            <input type="text" name="name" id="name"
-            value="<%= locals.oldData ? oldData.name: delegado.name %>">
-            <% if (locals.errors && errors.name) { %>
-                <p class="msg-error"><%= errors.name.msg %></p>
-            <% } %>  
-
-            <label for="last_name">Apellido</label>
-            <input type="text" name="last_name" id="last_name"
-            value="<%= locals.oldData ? oldData.last_name: delegado.last_name %>">
-            <% if (locals.errors && errors.last_name) { %>
-                <p class="msg-error"><%= errors.last_name.msg %></p>
-            <% } %>  
-
-            <label for="email">Correo Electronico</label>
-            <input type="email" name="email" id="email"
-            value="<%= locals.oldData ? oldData.email: delegado.email %>">
-            <% if (locals.errors && errors.email) { %>
-                <p class="msg-error"><%= errors.email.msg %></p>
-            <% } %>  
-
-            <label for="tel">Telefono</label>
-            <input type="number" name="tel" id="tel"
-            value="<%= locals.oldData ? oldData.tel: delegado.tel %>">
-            <% if (locals.errors && errors.tel) { %>
-                <p class="msg-error"><%= errors.tel.msg %></p>
-            <% } %>  
-
-            <label for="equipo_id">Categoria</label>
-            <select name="equipo_id" id="equipo_id">
-                <% equipos.forEach(e => { %>
-                    <option value="<%=e.id%>" <%= e.id === delegado.equipo_id ? "selected": null %> ><%= e.name %> - <%= e.categoria.name %> </option>
-                <% }) %>
-            </select>
-            
-             <button type="submit">Guardar Cambios</button>
-        </form>
-
+        <% if (user) { %>
+            <% if (user.permiso == "sAdmin" || user.permiso == "delegados") { %>
+                <form method="post" action="/delegados/edit/<%= delegado.id %>?m=PUT" >
+                    <h3>Editar Delegado <%= delegado.last_name %> <%= delegado.name %> </h3>
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" id="name"
+                    value="<%= locals.oldData ? oldData.name: delegado.name %>">
+                    <% if (locals.errors && errors.name) { %>
+                        <p class="msg-error"><%= errors.name.msg %></p>
+                    <% } %>  
+        
+                    <label for="last_name">Apellido</label>
+                    <input type="text" name="last_name" id="last_name"
+                    value="<%= locals.oldData ? oldData.last_name: delegado.last_name %>">
+                    <% if (locals.errors && errors.last_name) { %>
+                        <p class="msg-error"><%= errors.last_name.msg %></p>
+                    <% } %>  
+        
+                    <label for="email">Correo Electronico</label>
+                    <input type="email" name="email" id="email"
+                    value="<%= locals.oldData ? oldData.email: delegado.email %>">
+                    <% if (locals.errors && errors.email) { %>
+                        <p class="msg-error"><%= errors.email.msg %></p>
+                    <% } %>  
+        
+                    <label for="tel">Telefono</label>
+                    <input type="number" name="tel" id="tel"
+                    value="<%= locals.oldData ? oldData.tel: delegado.tel %>">
+                    <% if (locals.errors && errors.tel) { %>
+                        <p class="msg-error"><%= errors.tel.msg %></p>
+                    <% } %>  
+        
+                    <label for="equipo_id">Categoria</label>
+                    <select name="equipo_id" id="equipo_id">
+                        <% equipos.forEach(e => { %>
+                            <option value="<%=e.id%>" <%= e.id === delegado.equipo_id ? "selected": null %> ><%= e.name %> - <%= e.categoria.name %> </option>
+                        <% }) %>
+                    </select>
+                    
+                     <button type="submit">Guardar Cambios</button>
+                </form>
+            <% } %>
+        <% } %>
     </main>
 </body>
 </html>

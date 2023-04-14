@@ -5,75 +5,84 @@
 <body>
     <%- include("../includes/header.ejs") %>
     <main>
-        <form method="post" action="/clubes/created">
-            <h3>Nuevo Club <i class="fa-solid fa-plus"></i></h3>
+        <h2>EQUIPOS Y CLUBES</h2>
+        <% if (user && user.permiso == "sAdmin") { %>
+            <form method="post" action="/clubes/created">
+                <h3>Nuevo Club <i class="fa-solid fa-plus"></i></h3>
+    
+                <label for="name">Nombre del Club</label>
+                <input type="text" name="name" id="name">
+    
+                <button type="submit">Crear Club</button>
+                <br>
+            </form>
+        <%}%>
+        
+        <a href="/clubes/">Ver Lista de Clubes</a>
 
-            <label for="name">Nombre del Club</label>
-            <input type="text" name="name" id="name">
-
-            <button type="submit">Crear Club</button>
-            <br>
-
-            <a href="/clubes/">Ver Lista de Clubes</a>
-        </form>
-        <form method="post" action="/equipos/created" >
-            <h3>Nuevo Equipo <i class="fa-solid fa-plus"></i></h3>
-            <label for="name">Nombre del Equipo</label>
-            <input type="text" name="name" id="name"
-            value="<%= locals.oldData ? oldData.name: null %>">
-            <% if (locals.errors && errors.name) { %>
-                <p class="msg-error"><%= errors.name.msg %></p>
-            <% } %>  
-
-            <label for="club_id">Club al que pertenece</label>
-            <select name="club_id" id="club_id">
-                <option selected disabled>Elegí un Club</option>
-                <% clubes.forEach(c =>{ %>
-                    <option value="<%=c.id%>"><%= c.name %> </option> 
-                <% }) %> 
-            </select>
-            <% if (locals.errors && errors.club_id) { %>
-                <p class="msg-error"><%= errors.club_id.msg %></p>
-            <% } %> 
-
-            <label for="categoria_id">Categoria a la que pertenece</label>
-            <select name="categoria_id" id="categoria_id">
-                <option selected disabled>Elegí una Categoria</option>
-                <% categorias.forEach(c =>{ %>
-                    <option value="<%=c.id%>"><%= c.name %> </option> 
-                <% }) %> 
-            </select>
-            <% if (locals.errors && errors.categoria_id) { %>
-                <p class="msg-error"><%= errors.categoria_id.msg %></p>
-            <% } %> 
-
-            <label for="color_1">Color 1</label>
-            <input type="text" id="color_1" name="color_1">
-
-            <label for="color_2">Color 2</label>
-            <input type="text" id="color_2" name="color_2">
-
-            <label for="color_3">Color 3</label>
-            <input type="text" id="color_3" name="color_3">
-
-            
-
-
-            <button type="submit">Crear Equipo</button>
-        </form>
+        <% if (user && user.permiso == "sAdmin") { %>
+            <form method="post" action="/equipos/created" >
+                <h3>Nuevo Equipo <i class="fa-solid fa-plus"></i></h3>
+                <label for="name">Nombre del Equipo</label>
+                <input type="text" name="name" id="name"
+                value="<%= locals.oldData ? oldData.name: null %>">
+                <% if (locals.errors && errors.name) { %>
+                    <p class="msg-error"><%= errors.name.msg %></p>
+                <% } %>  
+    
+                <label for="club_id">Club al que pertenece</label>
+                <select name="club_id" id="club_id">
+                    <option selected disabled>Elegí un Club</option>
+                    <% clubes.forEach(c =>{ %>
+                        <option value="<%=c.id%>"><%= c.name %> </option> 
+                    <% }) %> 
+                </select>
+                <% if (locals.errors && errors.club_id) { %>
+                    <p class="msg-error"><%= errors.club_id.msg %></p>
+                <% } %> 
+    
+                <label for="categoria_id">Categoria a la que pertenece</label>
+                <select name="categoria_id" id="categoria_id">
+                    <option selected disabled>Elegí una Categoria</option>
+                    <% categorias.forEach(c =>{ %>
+                        <option value="<%=c.id%>"><%= c.name %> </option> 
+                    <% }) %> 
+                </select>
+                <% if (locals.errors && errors.categoria_id) { %>
+                    <p class="msg-error"><%= errors.categoria_id.msg %></p>
+                <% } %> 
+    
+                <label for="color_1">Color 1</label>
+                <input type="text" id="color_1" name="color_1">
+    
+                <label for="color_2">Color 2</label>
+                <input type="text" id="color_2" name="color_2">
+    
+                <label for="color_3">Color 3</label>
+                <input type="text" id="color_3" name="color_3">
+    
+                
+    
+    
+                <button type="submit">Crear Equipo</button>
+            </form>
+        <%}%>
+        
         <section>
             <h3>Creados Recientemente</h3>
             <nav>
                 <% recentsEquipos.forEach(e => { %>
                     <div>
                         <p><%= e.name %> - <%= e.categoria.name  %></p>
-                        <a href="/equipos/edit/<%=e.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <form action="/equipos/delete/<%=e.id%>?m=DELETE" method="post">
-                            <button type="submit">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
+                        <% if (user && user.permiso == "sAdmin") { %>
+                            <a href="/equipos/edit/<%=e.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="/equipos/delete/<%=e.id%>?m=DELETE" method="post">
+                                <button type="submit">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
 
-                        </form>
+                            </form>
+                        <%}%>
                     </div>
                  
                 <% }) %>
@@ -99,13 +108,15 @@
                 <% listaEquipos.forEach(equipo => { %>
                     <div>
                         <p><%= equipo.name %> - <%= equipo.categoria.name  %></p>
-                        <a href="/equipos/edit/<%=equipo.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <form action="/equipos/delete/<%=equipo.id%>?m=DELETE" method="post">
-                            <button type="submit">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-
-                        </form>
+                        <% if (user && user.permiso == "sAdmin") { %>
+                            <a href="/equipos/edit/<%=equipo.id%>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="/equipos/delete/<%=equipo.id%>?m=DELETE" method="post">
+                                <button type="submit">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </form>
+                        <%}%>
+                        
                     </div>
                  
                 <% }) %>

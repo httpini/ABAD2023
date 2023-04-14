@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../includes/head.ejs")  %> 
+
+<body>
+    <%- include("../includes/header.ejs") %>
+    <main>
+        <form method="post" action="/usuarios/edit/<%= usuario.id %>?m=PUT" >
+            <h3>Editar el Usuario de <%= usuario.last_name %> <%= usuario.name %> (<%= usuario.user_name %>)</h3>
+
+            <label for="id">ID de Usuario</label>
+            <input name="id" id="id" type="text" readonly value="<%=usuario.id%>">
+
+            <label for="name">Nombre</label>
+            <input type="text" name="name" id="name"
+            value="<%= locals.oldData ? oldData.name: usuario.name %>">
+            <% if (locals.errors && errors.name) { %>
+                <p class="msg-error"><%= errors.name.msg %></p>
+            <% } %>  
+
+            <label for="last_name">Apellido</label>
+            <input type="text" name="last_name" id="last_name"
+            value="<%= locals.oldData ? oldData.last_name: usuario.last_name %>">
+            <% if (locals.errors && errors.last_name) { %>
+                <p class="msg-error"><%= errors.last_name.msg %></p>
+            <% } %>  
+
+            <label for="user_name">Nombre de Usuario</label>
+            <input type="text" name="user_name" id="user_name"
+            value="<%= locals.oldData ? oldData.user_name: usuario.user_name %>">
+            <% if (locals.errors && errors.user_name) { %>
+                <p class="msg-error"><%= errors.user_name.msg %></p>
+            <% } %>  
+
+            <% if (user && user.permiso == "sAdmin") { %>
+                <label for="permiso">Nivel de Jerarquia</label>
+            <select name="equipo_id" id="equipo_id">
+                <option value="sAdmin" <%= usuario.permiso == "sAdmin"? "selected":"" %>>Super Admin</option>
+                <option value="resultados" <%= usuario.permiso == "resultados"? "selected":"" %>>Solo Resultados</option>
+                <option value="delegados" <%= usuario.permiso == "delegados"? "selected":"" %>>Solo Delegados</option>
+                <option value="viewOnly" <%= usuario.permiso == "viewOnly"? "selected":"" %>>Solo Vistas</option>
+                <option value="tribunal" <%= usuario.permiso == "tribunal"? "selected":"" %>>Tribunal</option>
+            </select>
+                <%}%>
+            
+
+            <label for="newPassword">Nueva Contraseña</label>
+            <input type="text" name="newPassword" id="newPassword">
+            <% if (locals.errors && errors.newPassword) { %>
+                <p class="msg-error"><%= errors.newPassword.msg %></p>
+            <% } %>
+
+            <label for="passConfirm">Confirmar Nueva Contraseña</label>
+            <input type="text" name="passConfirm" id="passConfirm">
+            <% if (locals.errors && errors.passConfirm) { %>
+                <p class="msg-error"><%= errors.passConfirm.msg %></p>
+            <% } %>  
+            
+             <button type="submit">Guardar Cambios</button>
+        </form>
+
+    </main>
+</body>
+</html>

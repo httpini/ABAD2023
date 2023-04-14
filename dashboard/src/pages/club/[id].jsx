@@ -70,7 +70,7 @@ export default function ClubId({ id, club, equipos, torneos, equipo }) {
 
 export const getServerSideProps = async ({ params: { id }, query: { torneo, equipo } }) => {
   try {
-    console.time('time')
+    console.time('apis club id')
     let clubData = await axios.post('http://localhost:3500/api/club-url', { club: id })
 
     if (!clubData) {
@@ -119,7 +119,7 @@ export const getServerSideProps = async ({ params: { id }, query: { torneo, equi
     if (torneos) props.torneos = torneos
     if (equipoData) props.equipo = equipoData.data.equipos
 
-    console.timeEnd('time')
+    console.timeEnd('apis club id')
 
     return {
       props

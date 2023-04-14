@@ -45,10 +45,11 @@ export default function Header({ allTorneos }) {
                             <li className='text-4xl w-full my-2'>
                                 <AiOutlineClose onClick={() => setToggleMenu(false)} />
                             </li>
-                            <div className='flex flex-col gap-10 align-bottom text-right'>
-                                <Link href='/' className='hover:text-claro1 cursor-pointer pr-3'>Inicio</Link>
 
-                                <LinkHeader texto='Torneos' lista={torn} pagina='torneo' hide={true} />
+                            <div className='flex flex-col gap-10 align-bottom text-right text-xl'>
+               <Link href='/' className='hover:text-claro1 cursor-pointer pr-3'>Inicio</Link>
+
+                                <LinkHeader texto='Torneos' lista={[torn]} pagina='torneo' hide={true} />
                                 {/* <LinkHeader texto='Copas' lista={copas} pagina='copa' /> */}
                                 <LinkHeader texto='Clubes' lista={[]} pagina='club' />
                                 <LinkHeader texto='Nosotros' lista={[]} pagina='nosotros' />

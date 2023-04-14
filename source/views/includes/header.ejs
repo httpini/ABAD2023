@@ -4,9 +4,9 @@
     </figure>
     
     <section class="header-user">
-        <p>Hola Usuario Aministrador!</p>
+        <p>Hola <%= user.name %> <%= user.last_name %>!</p>
         <nav>
-            <a href="/"><i class="fa-solid fa-user-pen"></i></a>
+            <a href="/usuarios/edit/<%=user.id%>"><i class="fa-solid fa-user-pen"></i></a>
         </nav>
     </section>
     
@@ -24,11 +24,11 @@
         <a href="/goleadores">GOLEADORES</a>
         <a href="/fair-play">FAIR PLAY</a>
         <a href="/sancionados">SANCIONES</a>
-        <a href="/">USUARIOS</a>
+        <a href="/usuarios">USUARIOS</a>
     </nav>
 
     <nav class="logout-nav">
-        <a href="/">Cerrar Sesión</a>
+        <a href="/usuarios/logout">Cerrar Sesión</a>
     </nav>
 
 </header>

@@ -7,7 +7,7 @@ import FadeInOut from './FadeInOut'
 
 export default function Footer() {
   const [show, setShow] = useState(false);
-  const email = 'estfersomoza@gmail.com'
+  const email = 'estfersomoza@gmail.com , nicolas.pinol@hotmail.com'
 
   function copyEmail() {
     navigator.clipboard.writeText(email)
